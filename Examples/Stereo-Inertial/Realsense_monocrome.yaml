@@ -6,89 +6,120 @@
 Camera.type: "PinHole"
 
 # Camera calibration and distortion parameters (OpenCV) (equal for both cameras after stereo rectification)
-Camera.fx: 467.74270306499267   #435.2046959714599
-Camera.fy: 467.74270306499267   #435.2046959714599
-Camera.cx: 320.5 #367.4517211914062
-Camera.cy: 240.5 #252.
+Camera.fx: 850.113159 #748.35791
+Camera.fy: 851.260864 #748.35791
+Camera.cx: 640.556702 #446.621033 
+Camera.cy: 401.622528 #245.689011 
 
 Camera.k1: 0.0
 Camera.k2: 0.0
 Camera.p1: 0.0
 Camera.p2: 0.0
 
-Camera.bFishEye: 0
-
-Camera.width: 640
+Camera.width: 848
 Camera.height: 480
 
 # Camera frames per second 
-Camera.fps: 15.0
+Camera.fps: 30 #15.0
 
 # stereo baseline times fx
-Camera.bf: 11.6935675766
-
+Camera.bf: 42.523782363 #11.6935675766 TranslationLeftRight: -50.021320 0.090066 -2.001911
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
 
 # Close/Far threshold. Baseline times.
-ThDepth: 1500.0
+ThDepth: 120.0 # 35
+
+# Transformation from camera 0 to body-frame (imu) !!!!!!!!!!!!!!!!!!!!!!!!
+Tbc: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [1.0, 0.0, 0.0, 0.0,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         0.0, 0.0, 0.0, 1.0]
+   #data: [ -5.7586305857286746e-03, -4.0463318787729019e-03,
+   #      9.9997523237933461e-01, 2.0329267950355900e-02,
+   #      -9.9998287214160420e-01, -1.0224590553211677e-03,
+   #      -5.7628118925283633e-03, 7.9325209639615653e-03,
+   #      1.0457519809151661e-03, -9.9999129084997906e-01,
+   #      -4.0403746097850135e-03, 2.8559824645148020e-03, 0., 0., 0., 1. ]
+   
+   #data: [0.0148655429818, -0.999880929698, 0.00414029679422, -0.0216401454975,
+   #      0.999557249008, 0.0149672133247, 0.025715529948, -0.064676986768,
+   #     -0.0257744366974, 0.00375618835797, 0.999660727178, 0.00981073058949,
+   #      0.0, 0.0, 0.0, 1.0]
+
+# IMU noise (altered)
+IMU.NoiseGyro: 1.6968e-04 #0.01 # 1.6968e-04 
+IMU.NoiseAcc: 2.0000e-3 #0.1 # 2.0000e-3
+IMU.GyroWalk: 0.0001 #0.0001 
+IMU.AccWalk: 3.0000e-3 #0.001 # 3.0000e-3
+IMU.Frequency: 30
 
 #--------------------------------------------------------------------------------------------
 # Stereo Rectification. Only if you need to pre-rectify the images.
 # Camera.fx, .fy, etc must be the same as in LEFT.P
 #--------------------------------------------------------------------------------------------
 LEFT.height: 480
-LEFT.width: 640
+LEFT.width: 848
 LEFT.D: !!opencv-matrix
    rows: 1
    cols: 5
    dt: d
-   data: [-0.28340811, 0.07395907, 0.00019359, 1.76187114e-05, 0.0]
+   #data: [0.253336, 0.499059, -0.000710, -0.000385, 0.000000]
+   data: [0.0, 0.0, 0.0, 0.0, 0.0]
 LEFT.K: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [458.654, 0.0, 367.215, 0.0, 457.296, 248.375, 0.0, 0.0, 1.0]
-LEFT.R:  !!opencv-matrix
+   data: [850.113159, 0.0, 640.556702, 0.0, 851.260864, 401.622528, 0.0, 0.0, 1.0]
+LEFT.R:  !!opencv-matrix #??????? 
    rows: 3
    cols: 3
    dt: d
-   data: [0.999966347530033, -0.001422739138722922, 0.008079580483432283, 0.001365741834644127, 0.9999741760894847, 0.007055629199258132, -0.008089410156878961, -0.007044357138835809, 0.9999424675829176]
+   data: [0.999797, -0.018567, -0.007772, 0.018558, 0.999827, -0.001230, 0.007793, 0.001086, 0.999969]
+LEFT.Rf:  !!opencv-matrix #???????
+   rows: 3
+   cols: 3
+   dt: f
+   data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
 LEFT.P:  !!opencv-matrix
    rows: 3
    cols: 4
    dt: d
-   data: [435.2046959714599, 0, 367.4517211914062, 0,  0, 435.2046959714599, 252.2008514404297, 0,  0, 0, 1, 0]
+   data: [850.113159, 0.0, 640.556702, -0.0,  0.0, 851.260864, 401.622528, 0.0, 0.0, 0.0, 1.0, 0.0]
 
 RIGHT.height: 480
-RIGHT.width: 640
+RIGHT.width: 848
 RIGHT.D: !!opencv-matrix
    rows: 1
    cols: 5
    dt: d
-   data: [-0.28368365, 0.07451284, -0.00010473, -3.555907e-05, 0.0]
+   data: [0.0, 0.0, 0.0, 0.0, 0.0]
 RIGHT.K: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [457.587, 0.0, 379.999, 0.0, 456.134, 255.238, 0.0, 0.0, 1]
+   data: [851.910278, 0.0, 650.530090, 0.0, 852.940063, 408.275177, 0.0, 0.0, 1.0]
 RIGHT.R:  !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [0.9999633526194376, -0.003625811871560086, 0.007755443660172947, 0.003680398547259526, 0.9999684752771629, -0.007035845251224894, -0.007729688520722713, 0.007064130529506649, 0.999945173484644]
+   data: [0.999985, -0.002579, -0.004907,  0.002565, 0.999993,  -0.002864, 0.004915, 0.002851, 0.999984]
 RIGHT.P:  !!opencv-matrix
    rows: 3
    cols: 4
    dt: d
-   data: [435.2046959714599, 0, 367.4517211914062, -47.90639384423901, 0, 435.2046959714599, 252.2008514404297, 0, 0, 0, 1, 0]
+   data: [851.910278, 0.0, 650.530090, -50.021320,  0.0, 852.940063, 408.275177, 0.090066, 0.0, 0.0, 1.0, -2.001911]
 
 #--------------------------------------------------------------------------------------------
 # ORB Parameters
 #--------------------------------------------------------------------------------------------
 
 # ORB Extractor: Number of features per image
-ORBextractor.nFeatures: 4000
+ORBextractor.nFeatures: 5000
 
 # ORB Extractor: Scale factor between levels in the scale pyramid 	
 ORBextractor.scaleFactor: 1.2
@@ -100,17 +131,17 @@ ORBextractor.nLevels: 8
 # Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
 # Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
 # You can lower these values if your images have low contrast			
-ORBextractor.iniThFAST: 20
+ORBextractor.iniThFAST: 10 
 ORBextractor.minThFAST: 7
 
 #--------------------------------------------------------------------------------------------
 # Viewer Parameters
 #--------------------------------------------------------------------------------------------
-Viewer.KeyFrameSize: 0.05
-Viewer.KeyFrameLineWidth: 1
-Viewer.GraphLineWidth: 0.9
-Viewer.PointSize: 2
-Viewer.CameraSize: 0.08
+Viewer.KeyFrameSize: 0.005
+Viewer.KeyFrameLineWidth: 0.1
+Viewer.GraphLineWidth: 5
+Viewer.PointSize: 1
+Viewer.CameraSize: 0.02
 Viewer.CameraLineWidth: 3
 Viewer.ViewpointX: 0
 Viewer.ViewpointY: -0.7
